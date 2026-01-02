@@ -1,50 +1,81 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+SYNC IMPACT REPORT
+==================
+Version Change: 1.0.0 → 2.0.0
+Modified Principles: Complete rewrite - simplified to development principles only
+Added Sections: None (consolidated)
+Removed Sections:
+  - Purpose & Product Constraints (domain-specific, removed)
+  - Engineering Values (consolidated into Code Quality)
+  - Architecture & Boundaries (consolidated into Code Quality)
+  - Data, Auth & Security (domain-specific, removed)
+  - UX Consistency Rules (consolidated into User Experience Consistency)
+  - Drag & Drop Behavior (domain-specific, removed)
+  - Performance Expectations (renamed to Performance Requirements)
+  - Testing Standards (retained, refined)
+  - PR & CI Discipline (removed, CI requirements moved to Testing Standards)
+  - Definition of Done (removed)
 
-## Core Principles
+Templates Status:
+  ✅ plan-template.md - Reviewed, Constitution Check section remains flexible
+  ✅ spec-template.md - Reviewed, no changes needed
+  ✅ tasks-template.md - Reviewed, testing standards still aligned
+  
+Follow-up TODOs: None
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+Rationale: Simplified constitution to focus exclusively on development principles that apply 
+across all projects, removing product-specific and domain-specific rules.
+-->
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+# Project Constitution
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+## Code Quality
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+- Write clear, readable, and maintainable code; avoid clever but opaque solutions.
+- Use strong typing wherever possible; do not introduce loosely typed logic without clear justification.
+- Maintain a clear separation of concerns between UI, business logic, and data access.
+- Centralize access to external services (databases, APIs, etc.) behind well-defined interfaces.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+**Rationale**: Clear code reduces cognitive load, strong typing catches errors early, separation of concerns enables independent testing and modification, and centralized service access simplifies maintenance and testing.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Testing Standards
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+- Follow the testing pyramid:
+  - Unit tests for core logic
+  - Integration tests for data access and external services
+  - Minimal end-to-end (E2E) tests for critical user flows
+- All new features and bug fixes MUST include appropriate tests.
+- All tests MUST run in CI and pass before code is merged.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**Rationale**: The testing pyramid balances thorough coverage with execution speed. Unit tests provide fast feedback on logic errors, integration tests verify assumptions about external dependencies, and E2E tests ensure critical paths work. CI enforcement prevents regressions from reaching production.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## User Experience Consistency
+
+- Ensure consistent UI patterns and interaction behavior across the application.
+- Always provide clear loading, success, and error states for user actions.
+- User-facing error messages MUST be understandable and actionable.
+
+**Rationale**: Consistency builds user trust and reduces cognitive load. Clear state feedback reduces user anxiety during operations. Actionable error messages empower users to self-recover without frustration or support intervention.
+
+## Performance Requirements
+
+- Develop with performance in mind; avoid unnecessary re-renders, unbounded queries, and large payloads.
+- Use lazy loading, pagination, or virtualization where appropriate.
+- Address performance regressions before shipping new features.
+
+**Rationale**: Performance directly impacts user experience and retention. Proactive performance consideration during development is cheaper than reactive optimization. Performance regressions signal architectural problems that compound over time.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution defines development standards that apply to all features and changes.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+Amendments require:
+- Documented rationale for the proposed change
+- Review and explicit approval
+- Version increment following semantic versioning
+
+All changes MUST be reviewed against these principles before merging.
+
+Deviations from these principles MUST be explicitly justified and documented in the relevant design artifacts (e.g., implementation plan).
+
+**Version**: 2.0.0 | **Ratified**: 2026-01-02 | **Last Amended**: 2026-01-02

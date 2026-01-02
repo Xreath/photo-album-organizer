@@ -1,33 +1,23 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version Change: 1.0.0 → 2.0.0
-Modified Principles: Complete rewrite - simplified to development principles only
-Added Sections: None (consolidated)
-Removed Sections:
-  - Purpose & Product Constraints (domain-specific, removed)
-  - Engineering Values (consolidated into Code Quality)
-  - Architecture & Boundaries (consolidated into Code Quality)
-  - Data, Auth & Security (domain-specific, removed)
-  - UX Consistency Rules (consolidated into User Experience Consistency)
-  - Drag & Drop Behavior (domain-specific, removed)
-  - Performance Expectations (renamed to Performance Requirements)
-  - Testing Standards (retained, refined)
-  - PR & CI Discipline (removed, CI requirements moved to Testing Standards)
-  - Definition of Done (removed)
+Version Change: 2.0.0 → 2.0.1
+Modified Principles: Title updated from "Project Constitution" to "Project Development Principles"
+Added Sections: None
+Removed Sections: None
 
 Templates Status:
-  ✅ plan-template.md - Reviewed, Constitution Check section remains flexible
+  ✅ plan-template.md - Reviewed, no changes needed
   ✅ spec-template.md - Reviewed, no changes needed
-  ✅ tasks-template.md - Reviewed, testing standards still aligned
+  ✅ tasks-template.md - Reviewed, no changes needed
   
 Follow-up TODOs: None
 
-Rationale: Simplified constitution to focus exclusively on development principles that apply 
-across all projects, removing product-specific and domain-specific rules.
+Rationale: PATCH update - title clarification to better reflect scope (development principles 
+rather than organizational constitution).
 -->
 
-# Project Constitution
+# Project Development Principles
 
 ## Code Quality
 
@@ -67,7 +57,7 @@ across all projects, removing product-specific and domain-specific rules.
 
 ## Governance
 
-This constitution defines development standards that apply to all features and changes.
+This document defines development standards that apply to all features and changes.
 
 Amendments require:
 - Documented rationale for the proposed change
@@ -78,4 +68,4 @@ All changes MUST be reviewed against these principles before merging.
 
 Deviations from these principles MUST be explicitly justified and documented in the relevant design artifacts (e.g., implementation plan).
 
-**Version**: 2.0.0 | **Ratified**: 2026-01-02 | **Last Amended**: 2026-01-02
+**Version**: 2.0.1 | **Ratified**: 2026-01-02 | **Last Amended**: 2026-01-02

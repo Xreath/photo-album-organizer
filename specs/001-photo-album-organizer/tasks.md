@@ -16,18 +16,18 @@
 
 **Purpose**: Initialize React + Vite project with all dependencies and configuration
 
-- [ ] T001 Initialize Vite project with React and TypeScript template in project root
-- [ ] T002 Install core dependencies: react, react-dom, react-router-dom, @supabase/supabase-js in package.json
-- [ ] T003 [P] Install UI dependencies: tailwindcss, postcss, autoprefixer in package.json
-- [ ] T004 [P] Install drag-and-drop dependency: @dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities in package.json
-- [ ] T005 [P] Install utility dependencies: browser-image-compression, fractional-indexing in package.json
-- [ ] T006 [P] Install dev dependencies: vitest, @testing-library/react, playwright in package.json
-- [ ] T007 Configure Tailwind CSS with tailwind.config.js and postcss.config.js
-- [ ] T008 [P] Configure TypeScript with strict mode in tsconfig.json
-- [ ] T009 [P] Configure Vitest in vite.config.ts
-- [ ] T010 [P] Create environment variables file .env.local with Supabase placeholders
-- [ ] T011 Create project directory structure per plan.md (src/components, src/hooks, src/services, src/lib, src/types, src/pages)
-- [ ] T012 [P] Create base Tailwind styles in src/index.css
+- [x] T001 Initialize Vite project with React and TypeScript template in project root
+- [x] T002 Install core dependencies: react, react-dom, react-router-dom, @supabase/supabase-js in package.json
+- [x] T003 [P] Install UI dependencies: tailwindcss, postcss, autoprefixer in package.json
+- [x] T004 [P] Install drag-and-drop dependency: @dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities in package.json
+- [x] T005 [P] Install utility dependencies: browser-image-compression, fractional-indexing in package.json
+- [x] T006 [P] Install dev dependencies: vitest, @testing-library/react, playwright in package.json
+- [x] T007 Configure Tailwind CSS with tailwind.config.js and postcss.config.js
+- [x] T008 [P] Configure TypeScript with strict mode in tsconfig.json
+- [x] T009 [P] Configure Vitest in vite.config.ts
+- [x] T010 [P] Create environment variables file .env.local with Supabase placeholders
+- [x] T011 Create project directory structure per plan.md (src/components, src/hooks, src/services, src/lib, src/types, src/pages)
+- [x] T012 [P] Create base Tailwind styles in src/index.css
 
 **Checkpoint**: Project scaffolding complete. Run `npm run dev` to verify Vite serves the app.
 
@@ -39,25 +39,25 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T013 Initialize Supabase client in src/lib/supabase.ts with environment variables
-- [ ] T014 [P] Create TypeScript database types in src/types/database.ts (Album, Photo interfaces)
-- [ ] T015 [P] Create validation utility functions in src/lib/validation.ts (album name, file type, file size)
-- [ ] T016 Create fractional indexing utility in src/services/orderingService.ts (generatePosition, getPositionBetween)
-- [ ] T017 [P] Create image compression utility in src/lib/imageUtils.ts (compressImage, getImageDimensions)
-- [ ] T018 [P] Create shared UI components: Button in src/components/ui/Button.tsx
-- [ ] T019 [P] Create shared UI components: Modal in src/components/ui/Modal.tsx
-- [ ] T020 [P] Create shared UI components: Toast/notification in src/components/ui/Toast.tsx
-- [ ] T021 [P] Create shared UI components: LoadingSpinner in src/components/ui/LoadingSpinner.tsx
-- [ ] T022 [P] Create shared UI components: ConfirmDialog in src/components/ui/ConfirmDialog.tsx
-- [ ] T023 [P] Create shared UI components: EmptyState in src/components/ui/EmptyState.tsx
-- [ ] T024 Create app layout shell in src/components/layout/AppLayout.tsx with header and main content area
-- [ ] T025 [P] Create error boundary component in src/components/layout/ErrorBoundary.tsx
-- [ ] T026 Set up React Router in src/App.tsx with route placeholders for HomePage, AlbumPage, LoginPage, SignupPage
-- [ ] T027 Create Supabase database migration in supabase/migrations/001_initial_schema.sql with albums and photos tables
-- [ ] T028 [P] Add RLS policies for albums table in supabase/migrations/001_initial_schema.sql
-- [ ] T029 [P] Add RLS policies for photos table in supabase/migrations/001_initial_schema.sql
-- [ ] T030 [P] Create Supabase storage bucket configuration in supabase/migrations/002_storage.sql
-- [ ] T031 [P] Create seed data file in supabase/seed.sql for local development
+- [x] T013 Initialize Supabase client in src/lib/supabase.ts with environment variables
+- [x] T014 [P] Create TypeScript database types in src/types/database.ts (Album, Photo interfaces)
+- [x] T015 [P] Create validation utility functions in src/lib/validation.ts (album name, file type, file size)
+- [x] T016 Create fractional indexing utility in src/services/orderingService.ts (generatePosition, getPositionBetween)
+- [x] T017 [P] Create image compression utility in src/lib/imageUtils.ts (compressImage, getImageDimensions)
+- [x] T018 [P] Create shared UI components: Button in src/components/ui/Button.tsx
+- [x] T019 [P] Create shared UI components: Modal in src/components/ui/Modal.tsx
+- [x] T020 [P] Create shared UI components: Toast/notification in src/components/ui/Toast.tsx
+- [x] T021 [P] Create shared UI components: LoadingSpinner in src/components/ui/LoadingSpinner.tsx
+- [x] T022 [P] Create shared UI components: ConfirmDialog in src/components/ui/ConfirmDialog.tsx
+- [x] T023 [P] Create shared UI components: EmptyState in src/components/ui/EmptyState.tsx
+- [x] T024 Create app layout shell in src/components/layout/AppLayout.tsx with header and main content area
+- [x] T025 [P] Create error boundary component in src/components/layout/ErrorBoundary.tsx
+- [x] T026 Set up React Router in src/App.tsx with route placeholders for HomePage, AlbumPage, LoginPage, SignupPage
+- [x] T027 Create Supabase database migration in supabase/migrations/001_initial_schema.sql with albums and photos tables
+- [x] T028 [P] Add RLS policies for albums table in supabase/migrations/001_initial_schema.sql
+- [x] T029 [P] Add RLS policies for photos table in supabase/migrations/001_initial_schema.sql
+- [x] T030 [P] Create Supabase storage bucket configuration in supabase/migrations/002_storage.sql
+- [x] T031 [P] Create seed data file in supabase/seed.sql for local development
 
 **Checkpoint**: Foundation ready. Supabase migrations can be applied with `supabase db reset`. All shared components available.
 

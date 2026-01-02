@@ -48,27 +48,82 @@ export interface UpdatePhotoInput {
 }
 
 // Database schema type for Supabase client
-export interface Database {
+export type Database = {
     public: {
         Tables: {
             albums: {
-                Row: Album
-                Insert: Omit<Album, 'id' | 'created_at' | 'updated_at'> & {
+                Row: {
+                    id: string
+                    user_id: string
+                    name: string
+                    position: string
+                    has_custom_order: boolean
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
                     id?: string
+                    user_id: string
+                    name: string
+                    position: string
+                    has_custom_order?: boolean
                     created_at?: string
                     updated_at?: string
                 }
-                Update: Partial<Omit<Album, 'id'>>
+                Update: {
+                    id?: string
+                    user_id?: string
+                    name?: string
+                    position?: string
+                    has_custom_order?: boolean
+                    created_at?: string
+                    updated_at?: string
+                }
+                Relationships: []
             }
             photos: {
-                Row: Photo
-                Insert: Omit<Photo, 'id' | 'created_at' | 'updated_at'> & {
+                Row: {
+                    id: string
+                    album_id: string
+                    storage_path: string
+                    filename: string
+                    position: string
+                    file_size: number
+                    width: number | null
+                    height: number | null
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
                     id?: string
+                    album_id: string
+                    storage_path: string
+                    filename: string
+                    position: string
+                    file_size: number
+                    width?: number | null
+                    height?: number | null
                     created_at?: string
                     updated_at?: string
                 }
-                Update: Partial<Omit<Photo, 'id'>>
+                Update: {
+                    id?: string
+                    album_id?: string
+                    storage_path?: string
+                    filename?: string
+                    position?: string
+                    file_size?: number
+                    width?: number | null
+                    height?: number | null
+                    created_at?: string
+                    updated_at?: string
+                }
+                Relationships: []
             }
         }
+        Views: Record<string, never>
+        Functions: Record<string, never>
+        Enums: Record<string, never>
+        CompositeTypes: Record<string, never>
     }
 }

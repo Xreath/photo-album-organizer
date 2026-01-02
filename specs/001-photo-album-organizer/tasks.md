@@ -71,16 +71,16 @@
 
 ### Implementation for User Story 1
 
-- [ ] T032 [P] [US1] Create Album type and CRUD operations in src/services/albumService.ts
-- [ ] T033 [P] [US1] Create useAlbums hook in src/hooks/useAlbums.ts with list, create, update, delete functions
-- [ ] T034 [US1] Create AlbumCard component in src/components/albums/AlbumCard.tsx with name, date, and action buttons
-- [ ] T035 [P] [US1] Create CreateAlbumModal component in src/components/albums/CreateAlbumModal.tsx with name input and validation
-- [ ] T036 [P] [US1] Create EditAlbumModal component in src/components/albums/EditAlbumModal.tsx for renaming
-- [ ] T037 [US1] Create AlbumList component in src/components/albums/AlbumList.tsx with date grouping logic
-- [ ] T038 [US1] Create HomePage in src/pages/HomePage.tsx with AlbumList, create button, and loading/empty states
-- [ ] T039 [US1] Add delete album functionality with confirmation dialog in AlbumCard.tsx
-- [ ] T040 [US1] Add loading and error states to all album operations in useAlbums.ts
-- [ ] T041 [US1] Add toast notifications for album create/update/delete success and failure
+- [x] T032 [P] [US1] Create Album type and CRUD operations in src/services/albumService.ts
+- [x] T033 [P] [US1] Create useAlbums hook in src/hooks/useAlbums.ts with list, create, update, delete functions
+- [x] T034 [US1] Create AlbumCard component in src/components/albums/AlbumCard.tsx with name, date, and action buttons
+- [x] T035 [P] [US1] Create CreateAlbumModal component in src/components/albums/CreateAlbumModal.tsx with name input and validation
+- [x] T036 [P] [US1] Create EditAlbumModal component in src/components/albums/EditAlbumModal.tsx for renaming
+- [x] T037 [US1] Create AlbumList component in src/components/albums/AlbumList.tsx with date grouping logic
+- [x] T038 [US1] Create HomePage in src/pages/HomePage.tsx with AlbumList, create button, and loading/empty states
+- [x] T039 [US1] Add delete album functionality with confirmation dialog in AlbumCard.tsx
+- [x] T040 [US1] Add loading and error states to all album operations in useAlbums.ts
+- [x] T041 [US1] Add toast notifications for album create/update/delete success and failure
 
 **Checkpoint**: User Story 1 complete. Users can create, view, rename, and delete albums. Test by creating multiple albums on different dates.
 

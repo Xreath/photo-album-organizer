@@ -5,11 +5,12 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Link } from 'react-router-dom'
 import type { Album } from '../../types/database'
+import type { AlbumWithCover } from '../../services/albumService'
 import { Button } from '../ui/Button'
 import { ConfirmDialog } from '../ui/ConfirmDialog'
 
 interface DraggableAlbumCardProps {
-    album: Album
+    album: AlbumWithCover
     onEdit: (album: Album) => void
     onDelete: (albumId: string) => Promise<void>
     isDragging?: boolean
@@ -61,26 +62,41 @@ export function DraggableAlbumCard({ album, onEdit, onDelete }: DraggableAlbumCa
                 className={`album-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden group ${isDragging ? 'shadow-lg ring-2 ring-blue-500' : ''
                     }`}
             >
+                {/* Album preview - clickable to open */}
                 <Link
                     to={`/albums/${album.id}`}
                     className="block aspect-video bg-gradient-to-br from-blue-50 to-indigo-100 relative hover:from-blue-100 hover:to-indigo-200 transition-colors overflow-hidden"
                 >
-                    {/* Placeholder icon - cover photo will be added via useAlbums hook */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <svg
-                            className="w-12 h-12 text-blue-300"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={1.5}
-                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    {album.coverPhotoUrl ? (
+                        <>
+                            {/* Cover photo */}
+                            <img
+                                src={album.coverPhotoUrl}
+                                alt={album.name}
+                                className="w-full h-full object-cover"
+                                loading="lazy"
                             />
-                        </svg>
-                    </div>
+                            {/* Subtle overlay to help text readability */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                        </>
+                    ) : (
+                        /* Placeholder icon */
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <svg
+                                className="w-12 h-12 text-blue-300"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={1.5}
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                />
+                            </svg>
+                        </div>
+                    )}
 
                     {/* Open indicator on hover */}
                     <div className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/10 transition-colors">

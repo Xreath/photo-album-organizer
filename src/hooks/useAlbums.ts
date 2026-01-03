@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import type { Album, CreateAlbumInput, UpdateAlbumInput } from '../types/database'
+import type { AlbumWithCover } from '../services/albumService'
 import {
-    getAlbums,
+    getAlbumsWithCovers,
     createAlbum as createAlbumService,
     updateAlbum as updateAlbumService,
     deleteAlbum as deleteAlbumService,
@@ -14,7 +15,7 @@ import {
 import { calculateMovePosition } from '../services/orderingService'
 
 interface UseAlbumsState {
-    albums: Album[]
+    albums: AlbumWithCover[]
     isLoading: boolean
     error: string | null
     hasCustomOrder: boolean
@@ -22,7 +23,7 @@ interface UseAlbumsState {
 
 interface UseAlbumsReturn extends UseAlbumsState {
     // Grouped albums for display (when not using custom order)
-    albumsByDate: Map<string, Album[]>
+    albumsByDate: Map<string, AlbumWithCover[]>
     // Actions
     createAlbum: (input: CreateAlbumInput) => Promise<Album>
     updateAlbum: (albumId: string, input: UpdateAlbumInput) => Promise<Album>
@@ -54,7 +55,7 @@ export function useAlbums(): UseAlbumsReturn {
         setState(prev => ({ ...prev, isLoading: true, error: null }))
 
         try {
-            const albums = await getAlbums()
+            const albums = await getAlbumsWithCovers()
             const hasCustomOrder = albums.some(album => album.has_custom_order)
 
             setState({
@@ -84,17 +85,14 @@ export function useAlbums(): UseAlbumsReturn {
         try {
             const newAlbum = await createAlbumService(input)
 
-            // Add new album to state (at the end since it has the latest position)
-            setState(prev => ({
-                ...prev,
-                albums: [...prev.albums, newAlbum],
-            }))
+            // Refresh albums to get proper cover data
+            await fetchAlbums()
 
             return newAlbum
         } finally {
             setIsCreating(false)
         }
-    }, [])
+    }, [fetchAlbums])
 
     // Update album
     const updateAlbum = useCallback(async (albumId: string, input: UpdateAlbumInput): Promise<Album> => {
@@ -103,19 +101,14 @@ export function useAlbums(): UseAlbumsReturn {
         try {
             const updatedAlbum = await updateAlbumService(albumId, input)
 
-            // Update album in state
-            setState(prev => ({
-                ...prev,
-                albums: prev.albums.map(album =>
-                    album.id === albumId ? updatedAlbum : album
-                ),
-            }))
+            // Refresh albums to get updated cover data
+            await fetchAlbums()
 
             return updatedAlbum
         } finally {
             setIsUpdating(false)
         }
-    }, [])
+    }, [fetchAlbums])
 
     // Delete album
     const deleteAlbum = useCallback(async (albumId: string): Promise<void> => {
@@ -184,7 +177,7 @@ export function useAlbums(): UseAlbumsReturn {
 
     // Compute grouped albums when not using custom order
     const albumsByDate = state.hasCustomOrder
-        ? new Map<string, Album[]>()
+        ? new Map<string, AlbumWithCover[]>()
         : groupAlbumsByDate(state.albums)
 
     return {

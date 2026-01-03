@@ -260,8 +260,8 @@ export async function enableCustomOrder(): Promise<void> {
 /**
  * Groups albums by creation date for display
  */
-export function groupAlbumsByDate(albums: Album[]): Map<string, Album[]> {
-  const groups = new Map<string, Album[]>()
+export function groupAlbumsByDate<T extends Album>(albums: T[]): Map<string, T[]> {
+  const groups = new Map<string, T[]>()
 
   for (const album of albums) {
     const date = new Date(album.created_at).toLocaleDateString('en-US', {

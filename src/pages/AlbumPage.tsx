@@ -14,7 +14,7 @@ import { Meta } from '../components/ui/Meta'
 import { usePhotos } from '../hooks/usePhotos'
 import { useAuth } from '../hooks/useAuth'
 import { useToast } from '../components/ui/Toast'
-import { getAlbumById } from '../services/albumService'
+import { getAlbumById, setAlbumCover } from '../services/albumService'
 import type { Album, Photo } from '../types/database'
 
 export function AlbumPage() {
@@ -120,6 +120,18 @@ export function AlbumPage() {
         setViewingPhoto(photo)
     }
 
+    // Set album cover
+    const handleSetCover = async (photoId: string) => {
+        if (!albumId) return
+
+        try {
+            await setAlbumCover(albumId, photoId)
+            showToast('success', 'Album cover updated')
+        } catch (err) {
+            showToast('error', err instanceof Error ? err.message : 'Failed to set cover')
+        }
+    }
+
     const isLoading = albumLoading || photosLoading
     const error = albumError || photosError
 
@@ -193,6 +205,7 @@ export function AlbumPage() {
                                 onView={handleView}
                                 onDelete={handleDelete}
                                 onReorder={handleReorder}
+                                onSetCover={handleSetCover}
                             />
                         ) : (
                             <PhotoGrid
@@ -200,6 +213,7 @@ export function AlbumPage() {
                                 getThumbnailUrl={getThumbnailUrl}
                                 onView={handleView}
                                 onDelete={handleDelete}
+                                onSetCover={handleSetCover}
                             />
                         )
                     )}

@@ -27,6 +27,7 @@ interface DraggablePhotoGridProps {
     onView: (photo: Photo) => void
     onDelete: (photoId: string) => Promise<void>
     onReorder: (photoId: string, oldIndex: number, newIndex: number) => Promise<void>
+    onSetCover?: (photoId: string) => Promise<void>
 }
 
 export function DraggablePhotoGrid({
@@ -35,6 +36,7 @@ export function DraggablePhotoGrid({
     onView,
     onDelete,
     onReorder,
+    onSetCover,
 }: DraggablePhotoGridProps) {
     const [activeId, setActiveId] = useState<string | null>(null)
 
@@ -88,6 +90,7 @@ export function DraggablePhotoGrid({
                             thumbnailUrl={getThumbnailUrl(photo)}
                             onView={onView}
                             onDelete={onDelete}
+                            onSetCover={onSetCover}
                         />
                     ))}
                 </div>

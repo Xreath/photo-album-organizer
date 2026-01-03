@@ -211,14 +211,12 @@ export function getPhotoUrl(storagePath: string): string {
 
 /**
  * Gets a thumbnail URL for a photo
+ * Note: Falls back to regular URL if Supabase Image Transformations not available
+ * For proper thumbnails, enable Image Transformations in Supabase Dashboard > Storage > Settings
  */
-export function getThumbnailUrl(storagePath: string, width = 300, height = 300): string {
-    const { data } = supabase.storage.from('photos').getPublicUrl(storagePath, {
-        transform: {
-            width,
-            height,
-            resize: 'cover',
-        },
-    })
+export function getThumbnailUrl(storagePath: string, _width = 300, _height = 300): string {
+    // Use regular public URL - images are already compressed on upload
+    // If you have Supabase Pro, you can enable transformations in the dashboard
+    const { data } = supabase.storage.from('photos').getPublicUrl(storagePath)
     return data.publicUrl
 }

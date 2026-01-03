@@ -1,9 +1,10 @@
-// AlbumPage - View photos in an album
+// AlbumPage - View photos in an album with drag-and-drop reordering
 
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { AppLayout } from '../components/layout/AppLayout'
 import { PhotoGrid } from '../components/photos/PhotoGrid'
+import { DraggablePhotoGrid } from '../components/photos/DraggablePhotoGrid'
 import { PhotoUploader } from '../components/photos/PhotoUploader'
 import { PhotoViewer } from '../components/photos/PhotoViewer'
 import { Button } from '../components/ui/Button'
@@ -31,6 +32,7 @@ export function AlbumPage() {
         error: photosError,
         uploadPhotos,
         deletePhoto,
+        reorderPhoto,
         getPhotoUrl,
         getThumbnailUrl,
         isUploading,
@@ -103,6 +105,15 @@ export function AlbumPage() {
         }
     }
 
+    // Reorder handler
+    const handleReorder = async (photoId: string, oldIndex: number, newIndex: number) => {
+        try {
+            await reorderPhoto(photoId, oldIndex, newIndex)
+        } catch (err) {
+            showToast('error', err instanceof Error ? err.message : 'Failed to reorder photo')
+        }
+    }
+
     // View photo
     const handleView = (photo: Photo) => {
         setViewingPhoto(photo)
@@ -151,6 +162,7 @@ export function AlbumPage() {
                         <h1 className="text-3xl font-bold text-gray-900">{album.name}</h1>
                         <p className="text-gray-600 mt-1">
                             {photos.length} photo{photos.length === 1 ? '' : 's'}
+                            {photos.length > 1 && ' • Drag to reorder'}
                         </p>
                     </div>
 
@@ -170,14 +182,24 @@ export function AlbumPage() {
                         />
                     )}
 
-                    {/* Photo grid */}
+                    {/* Photo grid - Use draggable version when there are multiple photos */}
                     {photos.length > 0 && (
-                        <PhotoGrid
-                            photos={photos}
-                            getThumbnailUrl={getThumbnailUrl}
-                            onView={handleView}
-                            onDelete={handleDelete}
-                        />
+                        photos.length > 1 ? (
+                            <DraggablePhotoGrid
+                                photos={photos}
+                                getThumbnailUrl={getThumbnailUrl}
+                                onView={handleView}
+                                onDelete={handleDelete}
+                                onReorder={handleReorder}
+                            />
+                        ) : (
+                            <PhotoGrid
+                                photos={photos}
+                                getThumbnailUrl={getThumbnailUrl}
+                                onView={handleView}
+                                onDelete={handleDelete}
+                            />
+                        )
                     )}
                 </>
             )}

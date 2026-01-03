@@ -7,9 +7,11 @@ import {
     uploadPhoto as uploadPhotoService,
     uploadPhotos as uploadPhotosService,
     deletePhoto as deletePhotoService,
+    updatePhotoPosition,
     getPhotoUrl,
     getThumbnailUrl,
 } from '../services/photoService'
+import { calculateMovePosition } from '../services/orderingService'
 
 interface UsePhotosState {
     photos: Photo[]
@@ -28,6 +30,7 @@ interface UsePhotosReturn extends UsePhotosState {
     uploadPhoto: (file: File) => Promise<Photo>
     uploadPhotos: (files: File[]) => Promise<{ successful: Photo[]; failed: Array<{ file: File; error: string }> }>
     deletePhoto: (photoId: string) => Promise<void>
+    reorderPhoto: (photoId: string, oldIndex: number, newIndex: number) => Promise<void>
     refreshPhotos: () => Promise<void>
     // URL helpers
     getPhotoUrl: (photo: Photo) => string
@@ -36,6 +39,7 @@ interface UsePhotosReturn extends UsePhotosState {
     isUploading: boolean
     uploadProgress: UploadProgress | null
     isDeleting: boolean
+    isReordering: boolean
 }
 
 export function usePhotos(albumId: string): UsePhotosReturn {
@@ -48,6 +52,7 @@ export function usePhotos(albumId: string): UsePhotosReturn {
     const [isUploading, setIsUploading] = useState(false)
     const [uploadProgress, setUploadProgress] = useState<UploadProgress | null>(null)
     const [isDeleting, setIsDeleting] = useState(false)
+    const [isReordering, setIsReordering] = useState(false)
 
     // Fetch photos
     const fetchPhotos = useCallback(async () => {
@@ -145,6 +150,48 @@ export function usePhotos(albumId: string): UsePhotosReturn {
         }
     }, [])
 
+    // Reorder photo (drag and drop)
+    const reorderPhoto = useCallback(async (
+        photoId: string,
+        oldIndex: number,
+        newIndex: number
+    ): Promise<void> => {
+        if (oldIndex === newIndex) return
+
+        setIsReordering(true)
+
+        // Get current photos
+        const currentPhotos = state.photos
+
+        // Calculate new position using fractional indexing
+        const newPosition = calculateMovePosition(currentPhotos, oldIndex, newIndex)
+
+        // Optimistically update the UI
+        const reorderedPhotos = [...currentPhotos]
+        const [movedPhoto] = reorderedPhotos.splice(oldIndex, 1)
+        const updatedPhoto = { ...movedPhoto, position: newPosition }
+        reorderedPhotos.splice(newIndex, 0, updatedPhoto)
+
+        setState(prev => ({
+            ...prev,
+            photos: reorderedPhotos,
+        }))
+
+        try {
+            // Persist to database
+            await updatePhotoPosition(photoId, newPosition)
+        } catch (err) {
+            // Revert on error
+            setState(prev => ({
+                ...prev,
+                photos: currentPhotos,
+            }))
+            throw err
+        } finally {
+            setIsReordering(false)
+        }
+    }, [state.photos])
+
     // URL helpers bound to photos
     const getPhotoUrlForPhoto = useCallback((photo: Photo) => {
         return getPhotoUrl(photo.storage_path)
@@ -159,11 +206,13 @@ export function usePhotos(albumId: string): UsePhotosReturn {
         uploadPhoto,
         uploadPhotos,
         deletePhoto,
+        reorderPhoto,
         refreshPhotos: fetchPhotos,
         getPhotoUrl: getPhotoUrlForPhoto,
         getThumbnailUrl: getThumbnailUrlForPhoto,
         isUploading,
         uploadProgress,
         isDeleting,
+        isReordering,
     }
 }

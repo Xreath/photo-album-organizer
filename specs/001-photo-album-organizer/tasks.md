@@ -121,16 +121,16 @@
 
 ### Implementation for User Story 3
 
-- [ ] T056 [P] [US3] Add reorder function to albumService.ts using fractional indexing
-- [ ] T057 [P] [US3] Add updatePosition function to useAlbums.ts hook
-- [ ] T058 [US3] Create DraggableAlbumList component in src/components/albums/DraggableAlbumList.tsx using @dnd-kit/sortable
-- [ ] T059 [US3] Create DraggableAlbumCard component in src/components/albums/DraggableAlbumCard.tsx with drag handle
-- [ ] T060 [US3] Add drag overlay and drop indicators styling in DraggableAlbumList.tsx
-- [ ] T061 [US3] Implement has_custom_order flag logic: switch from date grouping to position ordering after first drag
-- [ ] T062 [US3] Add optimistic UI update for drag operations with rollback on error
-- [ ] T063 [US3] Update HomePage.tsx to use DraggableAlbumList instead of AlbumList after first reorder
-- [ ] T064 [US3] Add visual feedback during drag (opacity, scale, shadow effects)
-- [ ] T065 [US3] Handle drop outside valid zones by returning to original position
+- [x] T056 [P] [US3] Add reorder function to albumService.ts using fractional indexing
+- [x] T057 [P] [US3] Add updatePosition function to useAlbums.ts hook
+- [x] T058 [US3] Create DraggableAlbumList component in src/components/albums/DraggableAlbumList.tsx using @dnd-kit/sortable
+- [x] T059 [US3] Create DraggableAlbumCard component in src/components/albums/DraggableAlbumCard.tsx with drag handle
+- [x] T060 [US3] Add drag overlay and drop indicators styling in DraggableAlbumList.tsx
+- [x] T061 [US3] Implement has_custom_order flag logic: switch from date grouping to position ordering after first drag
+- [x] T062 [US3] Add optimistic UI update for drag operations with rollback on error
+- [x] T063 [US3] Update HomePage.tsx to use DraggableAlbumList instead of AlbumList after first reorder
+- [x] T064 [US3] Add visual feedback during drag (opacity, scale, shadow effects)
+- [x] T065 [US3] Handle drop outside valid zones by returning to original position
 
 **Checkpoint**: User Story 3 complete. Albums can be reordered via drag-and-drop. Test by reordering multiple times and refreshing.
 
@@ -144,14 +144,14 @@
 
 ### Implementation for User Story 4
 
-- [ ] T066 [P] [US4] Add reorder function to photoService.ts using fractional indexing
-- [ ] T067 [P] [US4] Add updatePosition function to usePhotos.ts hook
-- [ ] T068 [US4] Create DraggablePhotoGrid component in src/components/photos/DraggablePhotoGrid.tsx using @dnd-kit/sortable
-- [ ] T069 [US4] Create DraggablePhotoTile component in src/components/photos/DraggablePhotoTile.tsx with drag capability
-- [ ] T070 [US4] Add drag overlay and drop indicators styling for photo grid
-- [ ] T071 [US4] Add optimistic UI update for photo drag operations with rollback on error
-- [ ] T072 [US4] Update AlbumPage.tsx to use DraggablePhotoGrid
-- [ ] T073 [US4] Add visual feedback during photo drag (opacity, scale, shadow effects)
+- [x] T066 [P] [US4] Add reorder function to photoService.ts using fractional indexing
+- [x] T067 [P] [US4] Add updatePosition function to usePhotos.ts hook
+- [x] T068 [US4] Create DraggablePhotoGrid component in src/components/photos/DraggablePhotoGrid.tsx using @dnd-kit/sortable
+- [x] T069 [US4] Create DraggablePhotoCard component in src/components/photos/DraggablePhotoCard.tsx with drag capability
+- [x] T070 [US4] Add drag overlay and drop indicators styling for photo grid
+- [x] T071 [US4] Add optimistic UI update for photo drag operations with rollback on error
+- [x] T072 [US4] Update AlbumPage.tsx to use DraggablePhotoGrid
+- [x] T073 [US4] Add visual feedback during photo drag (opacity, scale, shadow effects)
 
 **Checkpoint**: User Story 4 complete. Photos can be reordered within albums. Test by reordering photos and navigating away/back.
 

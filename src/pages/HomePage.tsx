@@ -1,8 +1,9 @@
-// HomePage - Main album list page
+// HomePage - Main album list page with drag-and-drop reordering
 
 import { useState } from 'react'
 import { AppLayout } from '../components/layout/AppLayout'
 import { AlbumList } from '../components/albums/AlbumList'
+import { DraggableAlbumList } from '../components/albums/DraggableAlbumList'
 import { CreateAlbumModal } from '../components/albums/CreateAlbumModal'
 import { EditAlbumModal } from '../components/albums/EditAlbumModal'
 import { Button } from '../components/ui/Button'
@@ -23,6 +24,7 @@ export function HomePage() {
         createAlbum,
         updateAlbum,
         deleteAlbum,
+        reorderAlbum,
         isCreating,
         isUpdating,
     } = useAlbums()
@@ -38,7 +40,7 @@ export function HomePage() {
         try {
             await signOut()
             showToast('success', 'Logged out successfully')
-        } catch (err) {
+        } catch {
             showToast('error', 'Failed to log out')
         }
     }
@@ -80,6 +82,19 @@ export function HomePage() {
         }
     }
 
+    // Reorder handler
+    const handleReorder = async (albumId: string, oldIndex: number, newIndex: number) => {
+        try {
+            await reorderAlbum(albumId, oldIndex, newIndex)
+            // Only show toast on first reorder when switching to custom order
+            if (!hasCustomOrder) {
+                showToast('info', 'Albums are now in custom order. Drag to rearrange!')
+            }
+        } catch (err) {
+            showToast('error', err instanceof Error ? err.message : 'Failed to reorder album')
+        }
+    }
+
     return (
         <AppLayout isAuthenticated={true} onLogout={handleLogout}>
             {/* Header with title and create button */}
@@ -89,7 +104,7 @@ export function HomePage() {
                     <p className="text-gray-600 mt-1">
                         {albums.length === 0
                             ? 'Create your first album to get started'
-                            : `${albums.length} album${albums.length === 1 ? '' : 's'}`}
+                            : `${albums.length} album${albums.length === 1 ? '' : 's'}${hasCustomOrder ? ' • Drag to reorder' : ''}`}
                     </p>
                     {user && (
                         <p className="text-sm text-gray-500 mt-1">Signed in as {user.email}</p>
@@ -142,15 +157,26 @@ export function HomePage() {
                 />
             )}
 
-            {/* Album list */}
+            {/* Album list - Use draggable version when there are albums */}
             {!isLoading && !error && albums.length > 0 && (
-                <AlbumList
-                    albums={albums}
-                    albumsByDate={albumsByDate}
-                    hasCustomOrder={hasCustomOrder}
-                    onEdit={handleEdit}
-                    onDelete={handleDelete}
-                />
+                hasCustomOrder || albums.length > 1 ? (
+                    // Draggable list (always use when custom order or multiple albums)
+                    <DraggableAlbumList
+                        albums={albums}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
+                        onReorder={handleReorder}
+                    />
+                ) : (
+                    // Regular list with date grouping (only for single album without custom order)
+                    <AlbumList
+                        albums={albums}
+                        albumsByDate={albumsByDate}
+                        hasCustomOrder={hasCustomOrder}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
+                    />
+                )
             )}
 
             {/* Create album modal */}

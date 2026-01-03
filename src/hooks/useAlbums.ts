@@ -7,8 +7,11 @@ import {
     createAlbum as createAlbumService,
     updateAlbum as updateAlbumService,
     deleteAlbum as deleteAlbumService,
+    updateAlbumPosition,
+    enableCustomOrder,
     groupAlbumsByDate,
 } from '../services/albumService'
+import { calculateMovePosition } from '../services/orderingService'
 
 interface UseAlbumsState {
     albums: Album[]
@@ -24,11 +27,13 @@ interface UseAlbumsReturn extends UseAlbumsState {
     createAlbum: (input: CreateAlbumInput) => Promise<Album>
     updateAlbum: (albumId: string, input: UpdateAlbumInput) => Promise<Album>
     deleteAlbum: (albumId: string) => Promise<void>
+    reorderAlbum: (albumId: string, oldIndex: number, newIndex: number) => Promise<void>
     refreshAlbums: () => Promise<void>
     // Loading states for individual operations
     isCreating: boolean
     isUpdating: boolean
     isDeleting: boolean
+    isReordering: boolean
 }
 
 export function useAlbums(): UseAlbumsReturn {
@@ -42,6 +47,7 @@ export function useAlbums(): UseAlbumsReturn {
     const [isCreating, setIsCreating] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
+    const [isReordering, setIsReordering] = useState(false)
 
     // Fetch albums on mount
     const fetchAlbums = useCallback(async () => {
@@ -128,6 +134,54 @@ export function useAlbums(): UseAlbumsReturn {
         }
     }, [])
 
+    // Reorder album (drag and drop)
+    const reorderAlbum = useCallback(async (
+        albumId: string,
+        oldIndex: number,
+        newIndex: number
+    ): Promise<void> => {
+        if (oldIndex === newIndex) return
+
+        setIsReordering(true)
+
+        // Get current albums
+        const currentAlbums = state.albums
+
+        // Calculate new position using fractional indexing
+        const newPosition = calculateMovePosition(currentAlbums, oldIndex, newIndex)
+
+        // Optimistically update the UI
+        const reorderedAlbums = [...currentAlbums]
+        const [movedAlbum] = reorderedAlbums.splice(oldIndex, 1)
+        const updatedAlbum = { ...movedAlbum, position: newPosition, has_custom_order: true }
+        reorderedAlbums.splice(newIndex, 0, updatedAlbum)
+
+        setState(prev => ({
+            ...prev,
+            albums: reorderedAlbums,
+            hasCustomOrder: true, // Once reordered, always show custom order
+        }))
+
+        try {
+            // Persist to database
+            await updateAlbumPosition(albumId, newPosition)
+
+            // Enable custom order for all albums (first time reordering)
+            if (!state.hasCustomOrder) {
+                await enableCustomOrder()
+            }
+        } catch (err) {
+            // Revert on error
+            setState(prev => ({
+                ...prev,
+                albums: currentAlbums,
+            }))
+            throw err
+        } finally {
+            setIsReordering(false)
+        }
+    }, [state.albums, state.hasCustomOrder])
+
     // Compute grouped albums when not using custom order
     const albumsByDate = state.hasCustomOrder
         ? new Map<string, Album[]>()
@@ -139,9 +193,11 @@ export function useAlbums(): UseAlbumsReturn {
         createAlbum,
         updateAlbum,
         deleteAlbum,
+        reorderAlbum,
         refreshAlbums: fetchAlbums,
         isCreating,
         isUpdating,
         isDeleting,
+        isReordering,
     }
 }

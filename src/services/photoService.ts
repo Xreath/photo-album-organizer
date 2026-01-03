@@ -119,6 +119,20 @@ export async function uploadPhoto(
         throw new Error(`Failed to create photo record: ${error.message}`)
     }
 
+    // Auto-set as cover if this is the first photo in the album
+    const { data: album } = await supabase
+        .from('albums')
+        .select('cover_photo_id')
+        .eq('id', albumId)
+        .single()
+
+    if (album && !album.cover_photo_id) {
+        await supabase
+            .from('albums')
+            .update({ cover_photo_id: photoId })
+            .eq('id', albumId)
+    }
+
     onProgress?.(100)
     return data
 }

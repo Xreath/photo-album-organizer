@@ -9,6 +9,54 @@ import { normalizeAlbumName } from '../lib/validation'
  * Fetches all albums for the current user
  * Returns albums sorted by position (if custom order) or created_at (if default)
  */
+// Extended Album type with cover photo URL
+export interface AlbumWithCover extends Album {
+  coverPhotoUrl: string | null
+}
+
+/**
+ * Fetches all albums for the current user with cover photo URLs
+ */
+export async function getAlbumsWithCovers(): Promise<AlbumWithCover[]> {
+  const { data: albums, error } = await supabase
+    .from('albums')
+    .select('*')
+    .order('position', { ascending: true })
+
+  if (error) {
+    throw new Error(`Failed to fetch albums: ${error.message}`)
+  }
+
+  if (!albums) return []
+
+  // Fetch cover photos for albums that have them
+  const albumsWithPhotos = await Promise.all(
+    albums.map(async (album) => {
+      if (!album.cover_photo_id) {
+        return { ...album, coverPhotoUrl: null }
+      }
+
+      const { data: photo } = await supabase
+        .from('photos')
+        .select('storage_path')
+        .eq('id', album.cover_photo_id)
+        .single()
+
+      if (!photo) {
+        return { ...album, coverPhotoUrl: null }
+      }
+
+      const { data } = supabase.storage.from('photos').getPublicUrl(photo.storage_path)
+      return { ...album, coverPhotoUrl: data.publicUrl }
+    })
+  )
+
+  return albumsWithPhotos
+}
+
+/**
+ * Fetches all albums for the current user (without cover URLs )
+ */
 export async function getAlbums(): Promise<Album[]> {
   const { data, error } = await supabase
     .from('albums')
@@ -20,6 +68,28 @@ export async function getAlbums(): Promise<Album[]> {
   }
 
   return data ?? []
+}
+
+/**
+ * Gets the cover photo URL for an album
+ */
+export async function getCoverPhotoUrl(album: Album): Promise<string | null> {
+  if (!album.cover_photo_id) {
+    return null
+  }
+
+  const { data: photo } = await supabase
+    .from('photos')
+    .select('storage_path')
+    .eq('id', album.cover_photo_id)
+    .single()
+
+  if (!photo) {
+    return null
+  }
+
+  const { data } = supabase.storage.from('photos').getPublicUrl(photo.storage_path)
+  return data.publicUrl
 }
 
 /**
@@ -48,7 +118,7 @@ export async function getAlbumById(albumId: string): Promise<Album | null> {
 export async function createAlbum(input: CreateAlbumInput): Promise<Album> {
   // Get the current user
   const { data: { user }, error: authError } = await supabase.auth.getUser()
-  
+
   if (authError || !user) {
     throw new Error('You must be logged in to create an album')
   }
@@ -96,6 +166,10 @@ export async function updateAlbum(albumId: string, input: UpdateAlbumInput): Pro
     updateData.position = input.position
   }
 
+  if (input.cover_photo_id !== undefined) {
+    updateData.cover_photo_id = input.cover_photo_id
+  }
+
   const { data, error } = await supabase
     .from('albums')
     .update(updateData)
@@ -108,6 +182,13 @@ export async function updateAlbum(albumId: string, input: UpdateAlbumInput): Pro
   }
 
   return data
+}
+
+/**
+ * Sets the cover photo for an album
+ */
+export async function setAlbumCover(albumId: string, photoId: string | null): Promise<Album> {
+  return updateAlbum(albumId, { cover_photo_id: photoId })
 }
 
 /**
@@ -161,7 +242,7 @@ export async function updateAlbumPosition(albumId: string, newPosition: string):
  */
 export async function enableCustomOrder(): Promise<void> {
   const { data: { user } } = await supabase.auth.getUser()
-  
+
   if (!user) {
     throw new Error('You must be logged in')
   }

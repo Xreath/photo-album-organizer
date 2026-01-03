@@ -7,6 +7,7 @@ export interface Album {
     name: string
     position: string
     has_custom_order: boolean
+    cover_photo_id: string | null
     created_at: string
     updated_at: string
 }
@@ -36,6 +37,7 @@ export interface CreateAlbumInput {
 export interface UpdateAlbumInput {
     name?: string
     position?: string
+    cover_photo_id?: string | null
 }
 
 export interface CreatePhotoInput {
@@ -58,6 +60,7 @@ export type Database = {
                     name: string
                     position: string
                     has_custom_order: boolean
+                    cover_photo_id: string | null
                     created_at: string
                     updated_at: string
                 }
@@ -67,6 +70,7 @@ export type Database = {
                     name: string
                     position: string
                     has_custom_order?: boolean
+                    cover_photo_id?: string | null
                     created_at?: string
                     updated_at?: string
                 }
@@ -76,6 +80,7 @@ export type Database = {
                     name?: string
                     position?: string
                     has_custom_order?: boolean
+                    cover_photo_id?: string | null
                     created_at?: string
                     updated_at?: string
                 }

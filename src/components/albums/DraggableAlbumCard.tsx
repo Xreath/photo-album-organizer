@@ -61,11 +61,11 @@ export function DraggableAlbumCard({ album, onEdit, onDelete }: DraggableAlbumCa
                 className={`album-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden group ${isDragging ? 'shadow-lg ring-2 ring-blue-500' : ''
                     }`}
             >
-                {/* Album preview - clickable to open */}
                 <Link
                     to={`/albums/${album.id}`}
-                    className="block aspect-video bg-gradient-to-br from-blue-50 to-indigo-100 relative hover:from-blue-100 hover:to-indigo-200 transition-colors"
+                    className="block aspect-video bg-gradient-to-br from-blue-50 to-indigo-100 relative hover:from-blue-100 hover:to-indigo-200 transition-colors overflow-hidden"
                 >
+                    {/* Placeholder icon - cover photo will be added via useAlbums hook */}
                     <div className="absolute inset-0 flex items-center justify-center">
                         <svg
                             className="w-12 h-12 text-blue-300"

@@ -94,20 +94,20 @@
 
 ### Implementation for User Story 2
 
-- [ ] T042 [P] [US2] Create Photo type and CRUD operations in src/services/photoService.ts with upload, list, delete
-- [ ] T043 [P] [US2] Create usePhotos hook in src/hooks/usePhotos.ts with list, upload, delete functions
-- [ ] T044 [US2] Create PhotoTile component in src/components/photos/PhotoTile.tsx with thumbnail and loading placeholder
-- [ ] T045 [US2] Create PhotoGrid component in src/components/photos/PhotoGrid.tsx with responsive tile layout
-- [ ] T046 [P] [US2] Create PhotoUploader component in src/components/photos/PhotoUploader.tsx with file input and drag-drop zone
-- [ ] T047 [US2] Create PhotoViewer component in src/components/photos/PhotoViewer.tsx for full-size view with close button
-- [ ] T048 [US2] Add multi-file upload support with progress tracking in PhotoUploader.tsx
-- [ ] T049 [US2] Add client-side image compression before upload using imageUtils.ts
-- [ ] T050 [US2] Create AlbumPage in src/pages/AlbumPage.tsx with PhotoGrid, PhotoUploader, and nav back to home
-- [ ] T051 [US2] Add file type validation and error messaging for invalid uploads
-- [ ] T052 [US2] Add file size validation (20MB limit) with error messaging
-- [ ] T053 [US2] Add delete photo functionality with confirmation dialog
-- [ ] T054 [US2] Add loading states and progress indicators for photo uploads
-- [ ] T055 [US2] Add empty state for albums with no photos prompting upload
+- [x] T042 [P] [US2] Create Photo type and CRUD operations in src/services/photoService.ts with upload, list, delete
+- [x] T043 [P] [US2] Create usePhotos hook in src/hooks/usePhotos.ts with list, upload, delete functions
+- [x] T044 [US2] Create PhotoTile component in src/components/photos/PhotoCard.tsx with thumbnail and loading placeholder
+- [x] T045 [US2] Create PhotoGrid component in src/components/photos/PhotoGrid.tsx with responsive tile layout
+- [x] T046 [P] [US2] Create PhotoUploader component in src/components/photos/PhotoUploader.tsx with file input and drag-drop zone
+- [x] T047 [US2] Create PhotoViewer component in src/components/photos/PhotoViewer.tsx for full-size view with close button
+- [x] T048 [US2] Add multi-file upload support with progress tracking in PhotoUploader.tsx
+- [x] T049 [US2] Add client-side image compression before upload using imageUtils.ts
+- [x] T050 [US2] Create AlbumPage in src/pages/AlbumPage.tsx with PhotoGrid, PhotoUploader, and nav back to home
+- [x] T051 [US2] Add file type validation and error messaging for invalid uploads
+- [x] T052 [US2] Add file size validation (20MB limit) with error messaging
+- [x] T053 [US2] Add delete photo functionality with confirmation dialog
+- [x] T054 [US2] Add loading states and progress indicators for photo uploads
+- [x] T055 [US2] Add empty state for albums with no photos prompting upload
 
 **Checkpoint**: User Story 2 complete. Users can upload, view, and delete photos. Test by uploading various image types and sizes.
 

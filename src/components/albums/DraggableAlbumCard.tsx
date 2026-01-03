@@ -59,13 +59,13 @@ export function DraggableAlbumCard({ album, onEdit, onDelete }: DraggableAlbumCa
             <div
                 ref={setNodeRef}
                 style={style}
-                className={`album-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden group ${isDragging ? 'shadow-lg ring-2 ring-blue-500' : ''
+                className={`album-card bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden group ${isDragging ? 'shadow-lg ring-2 ring-blue-500' : ''
                     }`}
             >
                 {/* Album preview - clickable to open */}
                 <Link
                     to={`/albums/${album.id}`}
-                    className="block aspect-video bg-gradient-to-br from-blue-50 to-indigo-100 relative hover:from-blue-100 hover:to-indigo-200 transition-colors overflow-hidden"
+                    className="block aspect-video bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-700 dark:to-gray-600 relative hover:from-blue-100 hover:to-indigo-200 dark:hover:from-gray-600 dark:hover:to-gray-500 transition-colors overflow-hidden"
                 >
                     {album.coverPhotoUrl ? (
                         <>
@@ -83,7 +83,7 @@ export function DraggableAlbumCard({ album, onEdit, onDelete }: DraggableAlbumCa
                         /* Placeholder icon */
                         <div className="absolute inset-0 flex items-center justify-center">
                             <svg
-                                className="w-12 h-12 text-blue-300"
+                                className="w-12 h-12 text-blue-300 dark:text-gray-500"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -111,18 +111,18 @@ export function DraggableAlbumCard({ album, onEdit, onDelete }: DraggableAlbumCa
                     <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
                             <Link to={`/albums/${album.id}`} className="block">
-                                <h3 className="font-semibold text-gray-900 truncate hover:text-blue-600 transition-colors">
+                                <h3 className="font-semibold text-gray-900 dark:text-white truncate hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                                     {album.name}
                                 </h3>
                             </Link>
-                            <p className="text-sm text-gray-500 mt-1">{formattedDate}</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{formattedDate}</p>
                         </div>
 
                         {/* Drag handle - small button */}
                         <div
                             {...attributes}
                             {...listeners}
-                            className="p-2 rounded-lg hover:bg-gray-100 cursor-grab active:cursor-grabbing flex-shrink-0"
+                            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-grab active:cursor-grabbing flex-shrink-0"
                             title="Drag to reorder"
                         >
                             <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

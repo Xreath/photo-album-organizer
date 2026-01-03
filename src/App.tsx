@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ToastProvider } from './components/ui/Toast'
 import { ErrorBoundary } from './components/layout/ErrorBoundary'
+import { ThemeProvider } from './contexts/ThemeContext'
 import { HomePage } from './pages/HomePage'
 import { AlbumPage } from './pages/AlbumPage'
 import { LoginPage } from './pages/LoginPage'
@@ -86,11 +87,13 @@ function AppRoutes() {
 function App() {
   return (
     <ErrorBoundary>
-      <ToastProvider>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
-      </ToastProvider>
+      <ThemeProvider>
+        <ToastProvider>
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </ToastProvider>
+      </ThemeProvider>
     </ErrorBoundary>
   )
 }

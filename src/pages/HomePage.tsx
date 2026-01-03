@@ -102,14 +102,14 @@ export function HomePage() {
             {/* Header with title and create button */}
             <div className="flex items-center justify-between mb-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">My Albums</h1>
-                    <p className="text-gray-600 mt-1">
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">My Albums</h1>
+                    <p className="text-gray-600 dark:text-gray-400 mt-1">
                         {albums.length === 0
                             ? 'Create your first album to get started'
                             : `${albums.length} album${albums.length === 1 ? '' : 's'}${hasCustomOrder ? ' • Drag to reorder' : ''}`}
                     </p>
                     {user && (
-                        <p className="text-sm text-gray-500 mt-1">Signed in as {user.email}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">Signed in as {user.email}</p>
                     )}
                 </div>
                 <Button onClick={() => setShowCreateModal(true)}>
@@ -139,7 +139,7 @@ export function HomePage() {
 
             {/* Error state */}
             {error && !isLoading && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800">
+                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 text-red-800 dark:text-red-300">
                     <p className="font-medium">Error loading albums</p>
                     <p className="text-sm mt-1">{error}</p>
                 </div>

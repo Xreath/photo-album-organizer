@@ -17,13 +17,12 @@ import {
     sortableKeyboardCoordinates,
     rectSortingStrategy,
 } from '@dnd-kit/sortable'
-import type { Album } from '../../types/database'
+import type { AlbumWithCover } from '../../services/albumService'
 import { DraggableAlbumCard } from './DraggableAlbumCard'
-import { AlbumCard } from './AlbumCard'
 
 interface DraggableAlbumListProps {
-    albums: Album[]
-    onEdit: (album: Album) => void
+    albums: AlbumWithCover[]
+    onEdit: (album: AlbumWithCover) => void
     onDelete: (albumId: string) => Promise<void>
     onReorder: (albumId: string, oldIndex: number, newIndex: number) => Promise<void>
 }
@@ -94,14 +93,40 @@ export function DraggableAlbumList({
             <DragOverlay>
                 {activeAlbum ? (
                     <div className="transform rotate-3 shadow-2xl">
-                        <AlbumCard
-                            album={activeAlbum}
-                            onEdit={() => { }}
-                            onDelete={async () => { }}
-                        />
+                        <div className="album-card bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden w-64">
+                            {/* Album preview with cover */}
+                            <div className="aspect-video bg-gradient-to-br from-blue-50 to-indigo-100 relative overflow-hidden">
+                                {activeAlbum.coverPhotoUrl ? (
+                                    <>
+                                        <img
+                                            src={activeAlbum.coverPhotoUrl}
+                                            alt={activeAlbum.name}
+                                            className="w-full h-full object-cover"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                                    </>
+                                ) : (
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <svg className="w-12 h-12 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                )}
+                            </div>
+                            {/* Album info */}
+                            <div className="p-4">
+                                <h3 className="font-semibold text-gray-900 truncate">{activeAlbum.name}</h3>
+                                <p className="text-sm text-gray-500 mt-1">
+                                    {new Date(activeAlbum.created_at).toLocaleDateString('en-US', {
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: 'numeric',
+                                    })}
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 ) : null}
             </DragOverlay>
         </DndContext>
     )
-}

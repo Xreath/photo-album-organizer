@@ -9,6 +9,7 @@ import { EditAlbumModal } from '../components/albums/EditAlbumModal'
 import { Button } from '../components/ui/Button'
 import { LoadingSpinner } from '../components/ui/LoadingSpinner'
 import { EmptyState, AlbumIcon } from '../components/ui/EmptyState'
+import { Meta } from '../components/ui/Meta'
 import { useAlbums } from '../hooks/useAlbums'
 import { useAuth } from '../hooks/useAuth'
 import { useToast } from '../components/ui/Toast'
@@ -97,6 +98,7 @@ export function HomePage() {
 
     return (
         <AppLayout isAuthenticated={true} onLogout={handleLogout}>
+            <Meta title="My Albums" description="Manage and organize your photo albums" />
             {/* Header with title and create button */}
             <div className="flex items-center justify-between mb-8">
                 <div>

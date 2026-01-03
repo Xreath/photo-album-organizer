@@ -185,16 +185,16 @@
 
 **Purpose**: Improvements that affect multiple user stories and final quality checks
 
-- [ ] T085 [P] Add responsive design breakpoints to AlbumList and PhotoGrid for mobile/tablet
-- [ ] T086 [P] Add keyboard navigation support for drag-and-drop (a11y)
-- [ ] T087 [P] Add ARIA labels to interactive elements (a11y)
-- [ ] T088 Add global error handling for network failures with retry options
-- [ ] T089 [P] Add page title updates using document.title or react-helmet
-- [ ] T090 Add loading skeleton placeholders for albums and photos while fetching
-- [ ] T091 [P] Review and improve all error messages for user clarity
-- [ ] T092 Run Lighthouse audit and address critical performance issues
-- [ ] T093 [P] Update README.md with project overview, setup instructions, and screenshots
-- [ ] T094 Run quickstart.md validation: verify all commands work on fresh clone
+- [x] T085 [P] Add responsive design breakpoints to AlbumList and PhotoGrid for mobile/tablet
+- [x] T086 [P] Add keyboard navigation support for drag-and-drop (a11y)
+- [x] T087 [P] Add ARIA labels to interactive elements (a11y)
+- [x] T088 Add global error handling for network failures with retry options
+- [x] T089 [P] Add page title updates using document.title or react-helmet
+- [x] T090 Add loading skeleton placeholders for albums and photos while fetching
+- [x] T091 [P] Review and improve all error messages for user clarity
+- [x] T092 Run Lighthouse audit and address critical performance issues
+- [x] T093 [P] Update README.md with project overview, setup instructions, and screenshots
+- [x] T094 Run quickstart.md validation: verify all commands work on fresh clone
 
 ---
 

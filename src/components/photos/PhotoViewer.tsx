@@ -10,7 +10,6 @@ interface PhotoViewerProps {
     photos: Photo[]
     onClose: () => void
     onNavigate: (photo: Photo) => void
-    getPhotoUrl: (photo: Photo) => string
 }
 
 export function PhotoViewer({
@@ -19,7 +18,6 @@ export function PhotoViewer({
     photos,
     onClose,
     onNavigate,
-    getPhotoUrl,
 }: PhotoViewerProps) {
     const [isLoading, setIsLoading] = useState(true)
 

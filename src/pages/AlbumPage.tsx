@@ -10,6 +10,7 @@ import { PhotoViewer } from '../components/photos/PhotoViewer'
 import { Button } from '../components/ui/Button'
 import { LoadingSpinner } from '../components/ui/LoadingSpinner'
 import { EmptyState, PhotoIcon } from '../components/ui/EmptyState'
+import { Meta } from '../components/ui/Meta'
 import { usePhotos } from '../hooks/usePhotos'
 import { useAuth } from '../hooks/useAuth'
 import { useToast } from '../components/ui/Toast'
@@ -124,6 +125,7 @@ export function AlbumPage() {
 
     return (
         <AppLayout isAuthenticated={true} onLogout={handleLogout}>
+            <Meta title={album?.name ?? 'Album'} description={`View and manage photos in ${album?.name ?? 'this album'}`} />
             {/* Back button and header */}
             <div className="mb-6">
                 <Link to="/">
@@ -211,7 +213,6 @@ export function AlbumPage() {
                 photos={photos}
                 onClose={() => setViewingPhoto(null)}
                 onNavigate={setViewingPhoto}
-                getPhotoUrl={getPhotoUrl}
             />
         </AppLayout>
     )
